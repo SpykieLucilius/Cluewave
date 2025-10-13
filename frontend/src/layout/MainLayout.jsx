@@ -6,6 +6,6 @@ export default function MainLayout({ children }) {
         <SoundProvider>
             <SoundControl />
             {children}
-        </SoundProvider>
+        </SoundProvider> 
     );
 }
