@@ -29,7 +29,7 @@ export function SoundProvider({ children }) {
         setMuted(n === 0);
     };
 
-    const value = useMemo(() => ({ volume, muted, toggleMute, setVolumentPct }), [volume, muted]);
+    const value = useMemo(() => ({ volume, muted, toggleMute, setVolumePct }), [volume, muted]);
 
     return <SoundContext.Provider value={value}>{children}</SoundContext.Provider>;
 }
