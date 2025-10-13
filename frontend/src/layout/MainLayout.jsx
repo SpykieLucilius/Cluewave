@@ -1,11 +1,11 @@
 import SoundControl from '../components/SoundControl/SoundControl.jsx';
-import { Outlet } from 'react-router-dom';
+import { SoundProvider } from '../context/SoundContext.jsx';
 
-export default function MainLayout() {
+export default function MainLayout({ children }) {
     return (
-        <>
+        <SoundProvider>
             <SoundControl />
-            <Outlet />
-        </>
+            {children}
+        </SoundProvider>
     );
 }
