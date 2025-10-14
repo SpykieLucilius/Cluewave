@@ -1,5 +1,5 @@
 {
-  "name": "backend-cluewave",
+  "name": "backend",
   "private": true,
   "type": "module",
   "engines": {
