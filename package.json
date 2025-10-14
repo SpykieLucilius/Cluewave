@@ -3,6 +3,7 @@
   "private": true,
   "engines": { "node": "20.x" },
   "scripts": {
+    "heroku-prebuild": "npm ci --prefix backend",
     "heroku-postbuild": "npm --prefix frontend ci --include=dev && npm --prefix frontend run build",
     "start": "node backend/src/index.js"
   }
