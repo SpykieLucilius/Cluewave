@@ -13,11 +13,15 @@ app.use(express.static(distPath));
 
 app.get("/healthz", (_req, res) => res.status(200).send("ok"));
 
-app.get("*", (_req, res) => {
-  res.sendFile(path.join(distPath, "index.html"));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
+});
+
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
