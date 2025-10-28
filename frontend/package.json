@@ -1,12 +1,18 @@
 {
-  "name": "cluewave-monorepo",
+  "name": "cluewave-frontend",
   "private": true,
-  "engines": {
-    "node": "20.x"
-  },
+  "version": "1.0.0",
   "scripts": {
-    "heroku-prebuild": "npm ci --prefix frontend",
-    "heroku-postbuild": "npm --prefix frontend run build && cp -r frontend/dist/* backend/src/main/resources/static/",
-    "start": "java -Dserver.port=$PORT -jar backend/target/cluewave-backend.jar"
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
+    "vite": "^5.4.0"
   }
 }
