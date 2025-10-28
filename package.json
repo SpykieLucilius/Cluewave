@@ -6,7 +6,7 @@
   },
   "scripts": {
     "heroku-prebuild": "echo '=== ls -R (repo root) ===' && ls -R && echo '=== FRONTEND PACKAGE.JSON ===' && cat frontend/package.json && echo '=== END PACKAGE.JSON ===' && echo '=== installing frontend deps ===' && npm install --prefix frontend --no-audit --no-fund && echo '=== done npm install, now list node_modules/frontend ===' && ls frontend/node_modules && echo '=== done listing node_modules ==='",
-    "heroku-postbuild": "echo '=== running vite build ===' && npm --prefix frontend run build && echo '=== after build, listing frontend/dist ===' && ls frontend/dist && echo '=== copying dist to backend static ===' && cp -r frontend/dist/* backend/src/main/resources/static/ && echo '=== copy complete ==='",
+    "heroku-postbuild": "echo '=== running vite build (cd frontend) ===' && cd frontend && npm run build && echo '=== build done, copying dist ===' && cp -r dist/* ../backend/src/main/resources/static/ && echo '=== copy complete ==='",
     "start": "java -Dserver.port=$PORT -jar backend/target/cluewave-backend.jar"
   }
 }
