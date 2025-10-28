@@ -1,5 +1,12 @@
-node_modules
-dist
-.env
-backend/.env
-frontend/.env
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Java / Spring Boot
+backend/target/
+
+# IDE / OS
+.idea/
+*.iml
+.DS_Store
+Thumbs.db

@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- On déclare Spring Boot comme parent DIRECT, avec une version fixe -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version>
+        <relativePath/> <!-- important: dit à Maven de le chercher en ligne -->
+    </parent>
+
+    <groupId>com.cluewave</groupId>
+    <artifactId>cluewave-backend</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>cluewave-backend</name>
+    <description>Cluewave Spring Boot backend</description>
+    <packaging>jar</packaging>
+
+    <properties>
+        <!-- Java 21, car Spring Boot 3.3 supporte très bien Java 21 -->
+        <java.version>21</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- API REST -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- WebSocket / STOMP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <!-- Actuator: /actuator/health etc. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Pour la sérialisation JSON (inclus via starter-web).
+             On n'ajoute rien de plus pour Jackson, c'est déjà là. -->
+
+        <!-- Tests -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Plugin Spring Boot pour créer le JAR exécutable -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- On force le nom du .jar pour matcher ton Procfile -->
+                    <finalName>cluewave-backend</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
