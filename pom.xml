@@ -4,7 +4,6 @@
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Le but de ce pom: dire à Heroku "regarde dans backend/" -->
     <groupId>com.cluewave</groupId>
     <artifactId>cluewave-root</artifactId>
     <version>1.0.0</version>
