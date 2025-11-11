@@ -2,12 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/index.css'
 import MainLayout from './layout/MainLayout.jsx'
-import Home from './pages/Home/Home.jsx'
+import App from './app/App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <MainLayout>
-      <Home />
+      <App />
     </MainLayout>
   </StrictMode>
 )
