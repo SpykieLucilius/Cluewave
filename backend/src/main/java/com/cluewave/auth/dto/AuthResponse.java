@@ -1,7 +1,5 @@
 package com.cluewave.auth.dto;
 
-import com.cluewave.auth.dto.UserDTO;
-
 /**
  * Response body returned after successful authentication.  Contains a JWT
  * access token, the token type (typically "Bearer"), expiration time in

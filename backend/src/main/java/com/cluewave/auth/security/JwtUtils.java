@@ -10,12 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-    import java.util.Date;
+import java.util.Date;
 
 /**
  * Utility class responsible for generating and validating JSON Web Tokens
- * (JWT).  Tokens are signed using a symmetric secret key and include the
- * authenticated user's principal (email) as the subject.  The expiration
+ * (JWT). Tokens are signed using a symmetric secret key and include the
+ * authenticated user's principal (email) as the subject. The expiration
  * duration is configured via application properties.
  */
 @Component
@@ -32,7 +32,7 @@ public class JwtUtils {
     }
 
     /**
-     * Generates a new JWT for the supplied {@link UserDetails}.  The token's
+     * Generates a new JWT for the supplied {@link UserDetails}. The token's
      * subject will be the user's username (email) and the expiration will be
      * computed based on the configured duration.
      *
@@ -46,43 +46,43 @@ public class JwtUtils {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
+                // oui c’est déprécié dans ta version, mais encore utilisable
                 .signWith(signingKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     /**
-     * Extracts the username (email) from the given JWT.  This method assumes
-     * the token has already been validated via {@link #validateToken(String)}.
+     * Extracts the username (email) from the given JWT.
+     *
+     * For your jjwt version, Jwts.parser() returns a builder, so we must call
+     * .build() before parsing.
      *
      * @param token the JWT
      * @return the subject contained within the token
      */
     public String extractUsername(String token) {
-        Claims claims = Jwts.parserBuilder()
+        Claims claims = Jwts.parser()
                 .setSigningKey(signingKey)
-                .build()
+                .build()                    // <-- important pour ta version
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
     }
 
     /**
-     * Validates the given JWT for integrity and expiration.  Returns {@code true}
-     * if the token can be parsed and is not expired; otherwise returns
-     * {@code false}.
+     * Validates the given JWT for integrity and expiration.
      *
      * @param token the JWT to validate
      * @return whether the token is valid
      */
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder()
+            Jwts.parser()
                     .setSigningKey(signingKey)
-                    .build()
+                    .build()                // <-- pareil ici
                     .parseClaimsJws(token);
             return true;
         } catch (Exception ex) {
-            // log the exception in a real application; swallow here to return false
             return false;
         }
     }
