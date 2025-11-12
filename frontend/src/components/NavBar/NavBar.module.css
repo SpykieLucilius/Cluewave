@@ -48,21 +48,19 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 999; /* au-dessus du contenu */
+  z-index: 999;
 }
 
-/* Bouton Login/Profile : même hauteur visuelle que le bouton Son */
 .iconButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  /* Hauteur/arrondis proches du bouton Son (slider container) */
-  height: 56px;                /* <-- ajuste si ton SoundControl est autre */
+  height: 56px;              
   padding: 0 16px;
   border-radius: 12px;
 
-  background: #444;
+  background: rgba(0, 0, 0, 0.4);
   color: #fff;
   border: 1px solid #666;
   line-height: 1;
@@ -74,13 +72,12 @@
 .iconButton:hover { opacity: .95; }
 .iconButton:active { transform: translateY(1px); }
 
-/* Enveloppe pour positionner la card par rapport au bouton Profile */
+
 .profileWrap {
   position: relative;
   display: inline-flex;
 }
 
-/* Petite card en superposition */
 .profileCard {
   position: absolute;
   top: calc(100% + 8px);
