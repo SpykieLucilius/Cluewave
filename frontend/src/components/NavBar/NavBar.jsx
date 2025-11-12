@@ -165,7 +165,7 @@ export default function NavBar() {
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
-                    placeholder="Nom d'utilisateur"
+                    placeholder="Username"
                   />
                   <input
                     className={styles.inputField}
@@ -180,7 +180,7 @@ export default function NavBar() {
                     name="currentPassword"
                     value={formData.currentPassword}
                     onChange={handleChange}
-                    placeholder="Mot de passe actuel"
+                    placeholder="Current password"
                   />
                   <input
                     className={styles.inputField}
@@ -188,7 +188,7 @@ export default function NavBar() {
                     name="newPassword"
                     value={formData.newPassword}
                     onChange={handleChange}
-                    placeholder="Nouveau mot de passe"
+                    placeholder="New password"
                   />
                   <input
                     className={styles.inputField}
@@ -196,7 +196,7 @@ export default function NavBar() {
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
-                    placeholder="Confirmer nouveau mot de passe"
+                    placeholder="Confirm new password"
                   />
                   {error && <p className={styles.errorText}>{error}</p>}
                   <div className={styles.cardActions}>

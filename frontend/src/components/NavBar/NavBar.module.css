@@ -1,33 +1,4 @@
-/* Ancien style hérités */
-.navBar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-  background-color: #2c2c2c;
-  color: #ffffff;
-}
-.left { display: flex; align-items: center; gap: 0.5rem; }
-.right { display: flex; align-items: center; }
-.navButton {
-  padding: 0.4rem 0.8rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #db5cdb;
-  color: #ffffff;
-  transition: background-color 0.15s ease-in-out;
-}
-.navButton:hover { background-color: #bf4cbf; }
-.profileButton {
-  background-color: #555555;
-  color: #ffffff;
-}
-.profileButton:hover { background-color: #666666; }
-
-/* Barre flottante : aucun fond, juste les boutons */
+/* Floating top-right bar */
 .floatingBar {
   position: fixed;
   top: 16px;
@@ -38,113 +9,95 @@
   z-index: 999;
 }
 
-/* Bouton Login/Profile : look similaire au toggle Son (56 x 56) */
+/* Buttons (Profile / Login / Sound) */
 .iconButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 56px;
-  min-width: 56px;
-  padding: 0 16px;
-  border-radius: 12px;
-  background: rgba(0,0,0,.4);
+  height: 48px;
+  min-width: 48px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.45);
   border: 1px solid rgba(255,255,255,.15);
   color: #fff;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   backdrop-filter: blur(6px);
   transition: transform .1s ease, background .15s ease;
 }
-.iconButton:hover { background: rgba(255,255,255,.1); }
-.iconButton:active { transform: scale(.98); }
+.iconButton:hover { background: rgba(255,255,255,.08); }
+.iconButton:active { transform: scale(.97); }
 
-/* Enveloppe de la carte pour position relative */
 .profileWrap {
   position: relative;
   display: inline-flex;
 }
 
-/* Carte superposée */
+/* Card overlay (glass-like look) */
 .profileCard {
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  min-width: 320px;
-  padding: 14px;
-  border-radius: 14px;
-  background: rgba(0,0,0,.45);
+  width: 280px;           /* Prevent overflow */
+  max-width: 85vw;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.55);
   border: 1px solid rgba(255,255,255,.16);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 12px 36px rgba(0,0,0,.5);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 28px rgba(0,0,0,.6);
   color: #fff;
 }
 
 .cardHeader {
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.05rem;
-  margin-bottom: 12px;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
-.cardRow {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.label {
-  font-size: 0.85rem;
-  color: #cfcfcf;
-}
-.value {
-  color: #fff;
-  font-weight: 600;
-}
-
-/* Inputs */
 .inputField {
   width: 100%;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: rgba(255,255,255,.06);
   color: #fff;
   border: 1px solid rgba(255,255,255,.18);
-  border-radius: 10px;
+  border-radius: 8px;
   outline: none;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
 }
 .inputField:focus {
   border-color: rgba(219,92,219,.6);
   box-shadow: 0 0 0 3px rgba(219,92,219,.18);
 }
 
-/* Texte d’erreur */
 .errorText {
   color: #ff6b6b;
-  margin-bottom: 8px;
-  font-size: 0.85rem;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  text-align: center;
 }
 
-/* Actions de la carte */
+/* Buttons inside card */
 .cardActions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 8px;
+  gap: 8px;
+  margin-top: 6px;
 }
 
-.logoutBtn,
-.editBtn,
-.saveBtn,
-.cancelBtn {
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 10px;
+.logoutBtn, .editBtn, .saveBtn, .cancelBtn {
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
   border: 1px solid rgba(255,255,255,.18);
   background: rgba(0,0,0,.35);
   color: #fff;
   cursor: pointer;
+  font-size: 0.9rem;
 }
-
 .logoutBtn:hover,
 .editBtn:hover,
 .cancelBtn:hover {
@@ -154,7 +107,7 @@
 .saveBtn {
   border-color: rgba(219,92,219,.5);
   background: rgba(219,92,219,.15);
-  font-weight: 700;
+  font-weight: 600;
 }
 .saveBtn:hover {
   background: rgba(219,92,219,.25);
