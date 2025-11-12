@@ -1,50 +1,79 @@
-.navBar {
+/* Barre flottante, sans fond : on ne voit que les boutons */
+.floatingBar {
+  position: fixed;
+  top: 16px;
+  right: 16px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background: #2b2b2b;
-  border-bottom: 1px solid #444;
+  gap: 10px;
+  z-index: 50; /* au-dessus du contenu */
 }
 
-.left, .right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.userMenu {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.primary {
-  background: #db5cdb;
-  color: #fff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.primary:hover { opacity: .92; }
-
-.ghost {
-  background: transparent;
-  color: #fff;
-  border: 1px solid #666;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.profile {
+/* Bouton “icône” : même feeling que le toggle du son */
+.iconButton {
   background: #444;
   color: #fff;
   border: 1px solid #666;
   padding: 8px 12px;
-  border-radius: 999px;
+  border-radius: 10px;
+  line-height: 1;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform .06s ease, opacity .15s ease, background .15s ease;
+}
+.iconButton:hover { opacity: .95; }
+.iconButton:active { transform: translateY(1px); }
+
+/* Enveloppe pour positionner la card par rapport au bouton Profile */
+.profileWrap {
+  position: relative;
+  display: inline-flex;
+}
+
+/* Petite card en superposition */
+.profileCard {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 260px;
+  background: #2b2b2b;
+  border: 1px solid #4a4a4a;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+  color: #fff;
+}
+
+.cardHeader {
+  font-weight: 700;
+  margin-bottom: 8px;
+  opacity: .95;
+}
+
+.cardRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px dashed #4a4a4a;
+}
+.cardRow:last-of-type { border-bottom: none; }
+
+.label { color: #bdbdbd; }
+.value { color: #fff; }
+
+.cardActions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.logoutBtn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #7a2b7a;
+  padding: 8px 12px;
+  border-radius: 8px;
   cursor: pointer;
 }
+.logoutBtn:hover { background: rgba(219,92,219,.12); }
