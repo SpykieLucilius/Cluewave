@@ -1,15 +1,15 @@
-/* Floating top-right bar */
+/* Floating bar: positions the login/profile and sound buttons top-right */
 .floatingBar {
   position: fixed;
   top: 16px;
   right: 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   z-index: 999;
 }
 
-/* Buttons (Profile / Login / Sound) */
+/* Generic button for Login/Profile */
 .iconButton {
   display: inline-flex;
   align-items: center;
@@ -18,97 +18,140 @@
   min-width: 48px;
   padding: 0 14px;
   border-radius: 10px;
-  background: rgba(0,0,0,.45);
-  border: 1px solid rgba(255,255,255,.15);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
   font-weight: 600;
   cursor: pointer;
   backdrop-filter: blur(6px);
-  transition: transform .1s ease, background .15s ease;
+  transition: transform 0.1s ease, background-color 0.15s ease;
 }
-.iconButton:hover { background: rgba(255,255,255,.08); }
-.iconButton:active { transform: scale(.97); }
+.iconButton:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+.iconButton:active {
+  transform: scale(0.97);
+}
 
+/* Relative container for the dropdown card */
 .profileWrap {
   position: relative;
   display: inline-flex;
 }
 
-/* Card overlay (glass-like look) */
+/* Dropdown card with glass effect */
 .profileCard {
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  width: 280px;           /* Prevent overflow */
-  max-width: 85vw;
+  width: 320px;
+  max-width: 90vw;
   padding: 16px;
   border-radius: 12px;
-  background: rgba(0,0,0,.55);
-  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 28px rgba(0,0,0,.6);
-  color: #fff;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  z-index: 1000;
 }
 
+/* Header text */
 .cardHeader {
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.inputField {
-  width: 100%;
-  padding: 8px 10px;
-  background: rgba(255,255,255,.06);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 8px;
-  outline: none;
+/* Row for label + value */
+.cardRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
   margin-bottom: 8px;
-  font-size: 0.9rem;
 }
-.inputField:focus {
-  border-color: rgba(219,92,219,.6);
-  box-shadow: 0 0 0 3px rgba(219,92,219,.18);
+/* remove dashed border; last row styling not needed */
+
+.label {
+  color: #cccccc;
+  font-weight: 500;
+}
+.value {
+  color: #ffffff;
+  font-weight: 600;
 }
 
-.errorText {
-  color: #ff6b6b;
-  margin-bottom: 6px;
-  font-size: 0.8rem;
-  text-align: center;
-}
-
-/* Buttons inside card */
+/* Actions container */
 .cardActions {
+  margin-top: 8px;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 6px;
 }
 
-.logoutBtn, .editBtn, .saveBtn, .cancelBtn {
+/* Logout button */
+.logoutBtn {
   height: 36px;
-  padding: 0 14px;
+  padding: 0 16px;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,.18);
-  background: rgba(0,0,0,.35);
-  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  font-size: 0.9rem;
   cursor: pointer;
+}
+.logoutBtn:hover {
+  background: rgba(255, 92, 92, 0.2);
+}
+
+/* Input fields for edit mode */
+.inputField {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
   font-size: 0.9rem;
 }
-.logoutBtn:hover,
-.editBtn:hover,
-.cancelBtn:hover {
-  background: rgba(255,255,255,.12);
+.inputField:focus {
+  border-color: rgba(219, 92, 219, 0.6);
+  box-shadow: 0 0 0 3px rgba(219, 92, 219, 0.2);
+  outline: none;
 }
 
+/* Buttons used for Edit, Save, Cancel */
+.editBtn,
+.saveBtn,
+.cancelBtn {
+  height: 36px;
+  padding: 0 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.editBtn:hover,
+.cancelBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
 .saveBtn {
-  border-color: rgba(219,92,219,.5);
-  background: rgba(219,92,219,.15);
+  border-color: rgba(219, 92, 219, 0.5);
+  background: rgba(219, 92, 219, 0.15);
   font-weight: 600;
 }
 .saveBtn:hover {
-  background: rgba(219,92,219,.25);
+  background: rgba(219, 92, 219, 0.25);
+}
+
+/* Error message */
+.errorText {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  text-align: center;
+  margin-bottom: 6px;
 }
