@@ -14,8 +14,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  min-width: 48px;
+  height: 56px;
+  min-width: 56px;
   padding: 0 14px;
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.4);
@@ -107,10 +107,11 @@
 
 /* Input fields for edit mode */
 .inputField {
+  display: block;
+  box-sizing: border-box;
   width: 100%;
   padding: 8px 10px;
-  margin-bottom: 8px;
-  margin-right: 8px;
+  margin:0 0 8px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.2);
