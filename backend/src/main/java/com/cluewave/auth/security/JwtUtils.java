@@ -12,12 +12,6 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
-/**
- * Utility class responsible for generating and validating JSON Web Tokens
- * (JWT). Tokens are signed using a symmetric secret key and include the
- * authenticated user's principal (email) as the subject. The expiration
- * duration is configured via application properties.
- */
 @Component
 public class JwtUtils {
 
@@ -46,7 +40,6 @@ public class JwtUtils {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                // oui c’est déprécié dans ta version, mais encore utilisable
                 .signWith(signingKey, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -63,7 +56,7 @@ public class JwtUtils {
     public String extractUsername(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(signingKey)
-                .build()                    // <-- important pour ta version
+                .build()                
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
@@ -79,7 +72,7 @@ public class JwtUtils {
         try {
             Jwts.parser()
                     .setSigningKey(signingKey)
-                    .build()                // <-- pareil ici
+                    .build()              
                     .parseClaimsJws(token);
             return true;
         } catch (Exception ex) {

@@ -1,10 +1,5 @@
 package com.cluewave.auth.dto;
 
-/**
- * Data transfer object exposing non‑sensitive user information.  Do not include
- * the password or other confidential fields here.  This object is returned in
- * authentication responses to the frontend.
- */
 public class UserDTO {
     private Long id;
     private String username;
