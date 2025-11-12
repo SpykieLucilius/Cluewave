@@ -1,3 +1,45 @@
+/* === (Optionnel) Ancien style de barre si jamais utilisé ailleurs === */
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: #2c2c2c;
+  color: #ffffff;
+}
+
+/* Groupes gauche/droite (legacy) */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.right {
+  display: flex;
+  align-items: center;
+}
+
+/* Boutons (legacy) */
+.navButton {
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #db5cdb;
+  color: #ffffff;
+  transition: background-color 0.15s ease-in-out;
+}
+.navButton:hover { background-color: #bf4cbf; }
+
+.profileButton {
+  background-color: #555555;
+  color: #ffffff;
+}
+.profileButton:hover { background-color: #666666; }
+
+/* === Floating bar (barre « invisible ») === */
 /* Barre flottante, sans fond : on ne voit que les boutons */
 .floatingBar {
   position: fixed;
@@ -6,19 +48,27 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 50; /* au-dessus du contenu */
+  z-index: 999; /* au-dessus du contenu */
 }
 
-/* Bouton “icône” : même feeling que le toggle du son */
+/* Bouton Login/Profile : même hauteur visuelle que le bouton Son */
 .iconButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Hauteur/arrondis proches du bouton Son (slider container) */
+  height: 40px;                /* <-- ajuste si ton SoundControl est autre */
+  padding: 0 14px;
+  border-radius: 10px;
+
   background: #444;
   color: #fff;
   border: 1px solid #666;
-  padding: 8px 12px;
-  border-radius: 10px;
   line-height: 1;
-  cursor: pointer;
   font-weight: 600;
+  cursor: pointer;
+
   transition: transform .06s ease, opacity .15s ease, background .15s ease;
 }
 .iconButton:hover { opacity: .95; }
