@@ -8,7 +8,6 @@ import com.cluewave.auth.model.User;
 import com.cluewave.auth.repository.UserRepository;
 import com.cluewave.auth.security.JwtUtils;
 import com.cluewave.auth.security.UserPrincipal;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,7 +28,6 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
-    @Autowired
     public AuthService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        AuthenticationManager authenticationManager,
