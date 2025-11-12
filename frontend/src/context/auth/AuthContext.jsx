@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext(null);
 
@@ -9,7 +9,6 @@ export function AuthProvider({ children }) {
   });
   const [token, setToken] = useState(() => localStorage.getItem('token'));
 
-  // --- LOGIN ---
   const login = async (email, password) => {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
@@ -27,7 +26,6 @@ export function AuthProvider({ children }) {
     localStorage.setItem('token', data.accessToken);
   };
 
-  // --- REGISTER ---
   const register = async (username, email, password) => {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
@@ -45,7 +43,6 @@ export function AuthProvider({ children }) {
     localStorage.setItem('token', data.accessToken);
   };
 
-  // --- LOGOUT ---
   const logout = () => {
     setUser(null);
     setToken(null);
@@ -53,7 +50,10 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('token');
   };
 
-  // --- UPDATE PROFILE ---
+  /**
+   * Met à jour le profil de l’utilisateur connecté.
+   * currentPassword est obligatoire ; les autres champs peuvent être omis pour rester inchangés.
+   */
   const updateProfile = async (updates) => {
     if (!token) throw new Error('Not authenticated');
     const res = await fetch('/api/auth/profile', {
@@ -84,8 +84,7 @@ export function AuthProvider({ children }) {
 }
 
 /**
- * Hook pratique pour accéder au contexte d'authentification.
- * Doit être utilisé à l'intérieur d'un <AuthProvider>.
+ * Hook pratique pour accéder au contexte d’authentification.
  */
 export function useAuth() {
   const context = useContext(AuthContext);

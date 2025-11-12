@@ -50,11 +50,14 @@ public class AuthController {
         try {
             UserDTO updated = authService.updateUser(
                     principal.getUser().getId(),
+                    request.getCurrentPassword(),
                     request.getUsername(),
-                    request.getEmail());
+                    request.getEmail(),
+                    request.getNewPassword());
             return ResponseEntity.ok(updated);
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         }
     }
+
 }
