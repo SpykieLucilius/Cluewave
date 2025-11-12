@@ -1,12 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-/**
- * Authentication context manages user state, JWT tokens and exposes
- * operations for logging in, registering and logging out.  The token and
- * user information are persisted to localStorage so that the session
- * survives page refreshes.  Components can consume this context via
- * {@link useAuth}.
- */
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
@@ -16,11 +9,6 @@ export function AuthProvider({ children }) {
   });
   const [token, setToken] = useState(() => localStorage.getItem('token'));
 
-  /**
-   * Perform a login against the backend.  On success update local state and
-   * persist the token and user to localStorage.  Throws an error on
-   * authentication failure.
-   */
   const login = async (email, password) => {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
@@ -38,9 +26,6 @@ export function AuthProvider({ children }) {
     localStorage.setItem('token', data.accessToken);
   };
 
-  /**
-   * Register a new user with the backend.  On success log the user in.
-   */
   const register = async (username, email, password) => {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
@@ -58,10 +43,6 @@ export function AuthProvider({ children }) {
     localStorage.setItem('token', data.accessToken);
   };
 
-  /**
-   * Clear the current session.  Removes all authentication state from memory
-   * and localStorage.
-   */
   const logout = () => {
     setUser(null);
     setToken(null);

@@ -1,10 +1,5 @@
 package com.cluewave.dto;
 
-/**
- * Data transfer object representing a Player.  Contains only the fields that
- * should be exposed to the client: id, name and score.  Internal details
- * (such as connection state) remain hidden.
- */
 public class PlayerDTO {
     private final String id;
     private final String name;

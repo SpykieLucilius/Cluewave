@@ -2,12 +2,6 @@ package com.cluewave.dto;
 
 import java.util.List;
 
-/**
- * Data transfer object representing a GameRoom.  Exposes only the data
- * required by the frontend: room code, list of players, the current round
- * (if any) and the room state.  Using a DTO decouples the internal model
- * from the JSON sent over the wire.
- */
 public class RoomDTO {
     private final String code;
     private final List<PlayerDTO> players;

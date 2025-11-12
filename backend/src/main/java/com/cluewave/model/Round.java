@@ -1,11 +1,5 @@
 package com.cluewave.model;
 
-/**
- * Represents a round in a game. A round contains two prompts (left and
- * right), a target position representing the correct answer on a 0..1 scale
- * (e.g. where the true answer lies between the two extremes) and a flag
- * indicating whether the result has been revealed to players.
- */
 public class Round {
     private String promptLeft;
     private String promptRight;

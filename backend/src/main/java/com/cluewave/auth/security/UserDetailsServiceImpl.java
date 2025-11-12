@@ -7,13 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/**
- * Loads user specific data during authentication.  Spring Security invokes this
- * service with the username (in our case the email address) supplied by the
- * client.  If no user is found an exception is thrown and authentication
- * fails.  Users are wrapped in a {@link UserPrincipal} to expose the
- * necessary details to the framework.
- */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 

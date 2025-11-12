@@ -1,10 +1,5 @@
 package com.cluewave.auth.dto;
 
-/**
- * Response body returned after successful authentication.  Contains a JWT
- * access token, the token type (typically "Bearer"), expiration time in
- * milliseconds, and a {@link UserDTO} with basic user information.
- */
 public class AuthResponse {
     private String accessToken;
     private String tokenType;

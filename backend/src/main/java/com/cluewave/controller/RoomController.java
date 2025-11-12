@@ -6,11 +6,6 @@ import com.cluewave.dto.RoundDTO;
 import com.cluewave.service.RoomService;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * REST controller exposing endpoints for room management: creating rooms,
- * joining rooms, retrieving room state and starting rounds.  JSON payloads
- * are mapped to simple record types for clarity.
- */
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
@@ -21,18 +16,8 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    /**
-     * Request body for creating a new room.
-     *
-     * @param hostName name of the user hosting the game
-     */
     public record CreateRoomRequest(String hostName) {}
 
-    /**
-     * Request body for joining an existing room.
-     *
-     * @param playerName name of the player joining
-     */
     public record JoinRequest(String playerName) {}
 
     @PostMapping

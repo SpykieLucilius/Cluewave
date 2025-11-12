@@ -3,16 +3,6 @@ package com.cluewave.auth.model;
 import jakarta.persistence.*;
 import java.time.Instant;
 
-/**
- * Persistent user entity representing a registered player in the system.
- *
- * <p>The table name is defined explicitly to avoid conflicts with the existing
- * in‑memory {@code com.cluewave.model.Player} class used for room state.
- * Users have unique email and username fields and a BCrypt hashed password.
- * A timestamp is captured at creation time for auditing.  Additional
- * attributes (e.g. roles, profile data) can be added later as needed.</p>
- */
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -26,12 +16,6 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String username;
-
-    /**
-     * The password is stored as a BCrypt hash.  Never expose this value to
-     * clients.  See {@link org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder}
-     * for encoding details.
-     */
 
     @Column(nullable = false)
     private String password;
