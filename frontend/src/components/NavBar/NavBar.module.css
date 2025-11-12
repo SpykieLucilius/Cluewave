@@ -122,3 +122,31 @@
   cursor: pointer;
 }
 .logoutBtn:hover { background: rgba(219,92,219,.12); }
+
+.inputField {
+  width: 100%;
+  padding: 6px 8px;
+  margin-bottom: 8px;
+  background: #3a3a3a;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 6px;
+}
+
+/* Bouton “Edit” et “Save/Cancel” : reprenez votre palette sombre */
+.editBtn,
+.saveBtn,
+.cancelBtn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #666;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 6px;
+}
+.editBtn:hover,
+.saveBtn:hover,
+.cancelBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}

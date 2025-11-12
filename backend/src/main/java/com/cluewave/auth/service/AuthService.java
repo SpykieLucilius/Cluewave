@@ -24,9 +24,9 @@ public class AuthService {
     private final JwtUtils jwtUtils;
 
     public AuthService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       AuthenticationManager authenticationManager,
-                       JwtUtils jwtUtils) {
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager,
+            JwtUtils jwtUtils) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
@@ -60,5 +60,26 @@ public class AuthService {
         User user = principal.getUser();
         return new AuthResponse(token, "Bearer", jwtUtils.getJwtExpirationMs(),
                 new UserDTO(user.getId(), user.getUsername(), user.getEmail()));
+    }
+
+    @Transactional
+    public UserDTO updateUser(Long userId, String username, String email) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (username != null && !username.equals(user.getUsername())) {
+            if (userRepository.existsByUsername(username)) {
+                throw new IllegalArgumentException("Username is already taken");
+            }
+            user.setUsername(username);
+        }
+        if (email != null && !email.equals(user.getEmail())) {
+            if (userRepository.existsByEmail(email)) {
+                throw new IllegalArgumentException("Email is already in use");
+            }
+            user.setEmail(email);
+        }
+        userRepository.save(user);
+        return new UserDTO(user.getId(), user.getUsername(), user.getEmail());
     }
 }

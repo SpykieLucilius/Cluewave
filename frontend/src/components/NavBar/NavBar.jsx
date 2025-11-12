@@ -4,27 +4,26 @@ import { useAuth } from '../../context/auth/AuthContext.jsx';
 import SoundControl from '../SoundControl/SoundControl.jsx';
 import styles from './NavBar.module.css';
 
-/**
- * Barre de navigation « invisible » : seuls les boutons sont visibles
- * en haut à droite.  Si l'utilisateur n'est pas connecté, on affiche
- * un bouton Login.  Sinon, un bouton Profile qui ouvre une petite
- * carte en surimpression avec les infos et un bouton Logout.
- */
 export default function NavBar() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, updateProfile } = useAuth();
   const [open, setOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({ username: user?.username || '', email: user?.email || '' });
   const cardRef = useRef(null);
 
-  // Ferme la carte profil en cas de clic extérieur ou de touche Échap
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (cardRef.current && !cardRef.current.contains(e.target)) {
         setOpen(false);
+        setEditMode(false);
       }
     };
     const handleKey = (e) => {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') {
+        setOpen(false);
+        setEditMode(false);
+      }
     };
     document.addEventListener('mousedown', handleOutsideClick);
     document.addEventListener('keydown', handleKey);
@@ -34,17 +33,20 @@ export default function NavBar() {
     };
   }, []);
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSave = async () => {
+    await updateProfile(formData);
+    setEditMode(false);
+    setOpen(false);
+  };
+
   return (
     <div className={styles.floatingBar}>
-      {/* Bouton Login ou Profile */}
       {!user ? (
-        <button
-          className={styles.iconButton}
-          onClick={() => navigate('/login')}
-          aria-label="Login"
-        >
-          Login
-        </button>
+        <button className={styles.iconButton} onClick={() => navigate('/login')}>Login</button>
       ) : (
         <div className={styles.profileWrap}>
           <button
@@ -52,35 +54,56 @@ export default function NavBar() {
             onClick={() => setOpen((v) => !v)}
             aria-haspopup="dialog"
             aria-expanded={open}
-            aria-label="Profile"
           >
             Profile
           </button>
-
           {open && (
             <div ref={cardRef} role="dialog" className={styles.profileCard}>
-              <div className={styles.cardHeader}>Player</div>
-              <div className={styles.cardRow}>
-                <span className={styles.label}>Name</span>
-                <span className={styles.value}>{user.username}</span>
-              </div>
-              {user.email && (
-                <div className={styles.cardRow}>
-                  <span className={styles.label}>Email</span>
-                  <span className={styles.value}>{user.email}</span>
-                </div>
+              {!editMode ? (
+                <>
+                  <div className={styles.cardHeader}>Player</div>
+                  <div className={styles.cardRow}>
+                    <span className={styles.label}>Name</span>
+                    <span className={styles.value}>{user.username}</span>
+                  </div>
+                  {user.email && (
+                    <div className={styles.cardRow}>
+                      <span className={styles.label}>Email</span>
+                      <span className={styles.value}>{user.email}</span>
+                    </div>
+                  )}
+                  <div className={styles.cardActions}>
+                    <button className={styles.logoutBtn} onClick={logout}>Logout</button>
+                    <button className={styles.editBtn} onClick={() => { setEditMode(true); setFormData({ username: user.username, email: user.email }); }}>Edit</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className={styles.cardHeader}>Edit profile</div>
+                  <input
+                    className={styles.inputField}
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    placeholder="Username"
+                  />
+                    <input
+                    className={styles.inputField}
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                  />
+                  <div className={styles.cardActions}>
+                    <button className={styles.saveBtn} onClick={handleSave}>Save</button>
+                    <button className={styles.cancelBtn} onClick={() => setEditMode(false)}>Cancel</button>
+                  </div>
+                </>
               )}
-              <div className={styles.cardActions}>
-                <button className={styles.logoutBtn} onClick={logout}>
-                  Logout
-                </button>
-              </div>
             </div>
           )}
         </div>
       )}
-
-      {/* Bouton de contrôle du son */}
       <SoundControl />
     </div>
   );

@@ -9,11 +9,12 @@ export function AuthProvider({ children }) {
   });
   const [token, setToken] = useState(() => localStorage.getItem('token'));
 
+  // --- LOGIN ---
   const login = async (email, password) => {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
     });
     if (!res.ok) {
       const msg = await res.text();
@@ -26,11 +27,12 @@ export function AuthProvider({ children }) {
     localStorage.setItem('token', data.accessToken);
   };
 
+  // --- REGISTER ---
   const register = async (username, email, password) => {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password })
+      body: JSON.stringify({ username, email, password }),
     });
     if (!res.ok) {
       const msg = await res.text();
@@ -43,6 +45,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem('token', data.accessToken);
   };
 
+  // --- LOGOUT ---
   const logout = () => {
     setUser(null);
     setToken(null);
@@ -50,16 +53,39 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('token');
   };
 
+  // --- UPDATE PROFILE ---
+  const updateProfile = async (updates) => {
+    if (!token) throw new Error('Not authenticated');
+    const res = await fetch('/api/auth/profile', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updates),
+    });
+    if (!res.ok) {
+      const msg = await res.text();
+      throw new Error(msg || 'Unable to update profile');
+    }
+    const data = await res.json();
+    setUser(data);
+    localStorage.setItem('user', JSON.stringify(data));
+    return data;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, token, login, register, logout, updateProfile }}
+    >
       {children}
     </AuthContext.Provider>
   );
 }
 
 /**
- * Convenience hook for consuming the AuthContext.  Throws an error if used
- * outside of an AuthProvider.
+ * Hook pratique pour accéder au contexte d'authentification.
+ * Doit être utilisé à l'intérieur d'un <AuthProvider>.
  */
 export function useAuth() {
   const context = useContext(AuthContext);
