@@ -1,87 +1,102 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/auth/AuthContext.jsx';
+import '../../styles/JoinRoom.css';
 
+/**
+ * Page for joining an existing room.  Users can either enter a room code or
+ * search by the host’s email.  The player name field is optional and
+ * defaults to the logged‑in user’s username when left blank.
+ */
 export default function JoinRoom() {
-  const [playerName, setPlayerName] = useState('');
+  const { user, token } = useAuth();
+  const navigate = useNavigate();
+  const [playerName, setPlayerName] = useState(user?.username || '');
   const [roomCode, setRoomCode] = useState('');
   const [hostEmail, setHostEmail] = useState('');
-  const navigate = useNavigate();
 
   const joinByCode = async (e) => {
     e.preventDefault();
-    const response = await fetch(`/api/rooms/${roomCode}/join`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ playerName }),
-    });
-    if (response.ok) {
+    const name = playerName && playerName.trim().length > 0 ? playerName : user?.username;
+    try {
+      const response = await fetch(`/api/rooms/${roomCode}/join`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ playerName: name }),
+      });
+      if (!response.ok) {
+        const msg = await response.text();
+        throw new Error(msg || 'Could not join room');
+      }
       navigate(`/room/${roomCode}`);
-    } else {
-      alert('Could not join room');
+    } catch (err) {
+      alert(err.message);
     }
   };
 
   const joinByEmail = async (e) => {
     e.preventDefault();
-    const response = await fetch('/api/rooms/join-by-email', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: hostEmail, playerName }),
-    });
-    if (response.ok) {
+    const name = playerName && playerName.trim().length > 0 ? playerName : user?.username;
+    try {
+      const response = await fetch('/api/rooms/join-by-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ email: hostEmail, playerName: name }),
+      });
+      if (!response.ok) {
+        const msg = await response.text();
+        throw new Error(msg || 'Could not join room by email');
+      }
       const room = await response.json();
       navigate(`/room/${room.code}`);
-    } else {
-      alert('Could not join room by email');
+    } catch (err) {
+      alert(err.message);
     }
   };
 
   return (
-    <div>
-      <h2>Join by Code</h2>
-      <form onSubmit={joinByCode}>
-        <label>
-          Room Code
-          <input
-            type="text"
-            value={roomCode}
-            onChange={(e) => setRoomCode(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Your Name
-          <input
-            type="text"
-            value={playerName}
-            onChange={(e) => setPlayerName(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Join</button>
+    <div className="join-room-container">
+      <h2>Join a Room</h2>
+      <form onSubmit={joinByCode} className="join-form">
+        <h3>Join by Code</h3>
+        <input
+          type="text"
+          placeholder="Room Code"
+          value={roomCode}
+          onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Your Name (optional)"
+          value={playerName}
+          onChange={(e) => setPlayerName(e.target.value)}
+        />
+        <button type="submit">Join by Code</button>
       </form>
-
-      <h2>Join by Host Email</h2>
-      <form onSubmit={joinByEmail}>
-        <label>
-          Host Email
-          <input
-            type="email"
-            value={hostEmail}
-            onChange={(e) => setHostEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Your Name
-          <input
-            type="text"
-            value={playerName}
-            onChange={(e) => setPlayerName(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit">Join</button>
+      <div className="divider">or</div>
+      <form onSubmit={joinByEmail} className="join-form">
+        <h3>Join by Host Email</h3>
+        <input
+          type="email"
+          placeholder="Host Email"
+          value={hostEmail}
+          onChange={(e) => setHostEmail(e.target.value)}
+          required
+        />
+        <input
+          type="text"
+          placeholder="Your Name (optional)"
+          value={playerName}
+          onChange={(e) => setPlayerName(e.target.value)}
+        />
+        <button type="submit">Join by Email</button>
       </form>
     </div>
   );

@@ -16,43 +16,48 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- * Service responsible for creating, joining and managing game rooms.  Rooms are
- * stored in memory using a concurrent map keyed by the room code.  Only two
- * players are allowed per room; attempts to join a full room result in an
- * exception.  Rooms may also be joined via the host's email address.
+ * Service responsible for creating and managing game rooms.  All room
+ * information lives in an in‑memory map keyed by the room code.  In a
+ * production environment you would likely replace this with a shared cache
+ * or database.  This service also enforces a two‑player limit and provides
+ * methods to join rooms either by code or by the host’s email.
  */
 @Service
 public class RoomService {
-
+    /**
+     * Rooms are stored in a concurrent map keyed by the room code.  Each
+     * GameRoom instance contains its own players map.
+     */
     private final Map<String, GameRoom> rooms = new ConcurrentHashMap<>();
 
     /**
-     * Creates a new game room with the given host name and host email.
-     * A unique code is generated and a host player is registered in the
-     * room's player map.
+     * Creates a new room for the given host.  A random code is generated
+     * and the host is automatically added to the room.  The host’s name and
+     * email are stored on the GameRoom for later lookup.
      *
-     * @param hostName  the display name of the host
-     * @param hostEmail the email address of the host
-     * @return a DTO representing the newly created room
+     * @param hostName  the username of the player creating the room
+     * @param hostEmail the email address of the player creating the room
+     * @return a DTO representing the new room state
      */
     public RoomDTO createRoom(String hostName, String hostEmail) {
         String code = generateCode();
-        GameRoom room = new GameRoom(code, hostEmail);
+        GameRoom room = new GameRoom(code, hostName, hostEmail);
         room.setState("lobby");
 
-        // create and add host
+        // create and register host player
         Player host = new Player(UUID.randomUUID().toString(), hostName);
         room.getPlayers().put(host.getId(), host);
+
         rooms.put(code, room);
         return toDTO(room);
     }
 
     /**
-     * Joins an existing room by its code.  If the room already has two
-     * participants an IllegalStateException is thrown.
+     * Adds a new player to an existing room by code.  If the room already
+     * contains two players (host + guest), an exception is thrown.
      *
-     * @param code       the code of the room
-     * @param playerName the name of the joining player
+     * @param code       the room code
+     * @param playerName the display name of the joining player
      * @return a DTO representing the joining player
      */
     public PlayerDTO joinRoom(String code, String playerName) {
@@ -66,45 +71,46 @@ public class RoomService {
     }
 
     /**
-     * Joins a room by the host's email address.  If no room exists for the
-     * specified email or the room is full, an exception is thrown.  After
-     * joining the player the updated room DTO is returned.
+     * Attempts to join a room using the host’s email.  If a matching room is
+     * found, the provided player is added as the second player.  If no
+     * matching room exists or the room is full, an exception is thrown.
      *
-     * @param email      the email address of the host
-     * @param playerName the name of the player attempting to join
-     * @return the updated RoomDTO
+     * @param hostEmail  the email of the host who created the room
+     * @param playerName the display name of the joining player
+     * @return a DTO representing the updated room
      */
-    public RoomDTO joinRoomByEmail(String email, String playerName) {
+    public RoomDTO joinRoomByEmail(String hostEmail, String playerName) {
         GameRoom room = rooms.values().stream()
-                .filter(r -> r.getHostEmail().equalsIgnoreCase(email))
+                .filter(r -> r.getHostEmail().equalsIgnoreCase(hostEmail))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "Room not found for host email: " + email));
+                .orElseThrow(() -> new IllegalArgumentException("Room not found for host email: " + hostEmail));
         joinRoom(room.getCode(), playerName);
         return toDTO(room);
     }
 
     /**
-     * Retrieves the current state of the room.
+     * Retrieves the current state of the room as a DTO.
      *
      * @param code the room code
-     * @return the room as a DTO
+     * @return a DTO with room details
      */
     public RoomDTO getRoomState(String code) {
         return toDTO(getOrThrow(code));
     }
 
     /**
-     * Starts a new round for the given room.  Placeholder prompts and a random
-     * target position are assigned and the room's state is updated.
+     * Starts a new round for the specified room.  For now the prompts and
+     * target values are placeholder values.  The room state transitions
+     * from "lobby" to "in_round".
      *
      * @param code the room code
-     * @return a DTO representing the new round
+     * @return a DTO representing the newly created round
      */
     public RoundDTO startRound(String code) {
         GameRoom room = getOrThrow(code);
         Round round = new Round();
-        // placeholder prompts – these can be replaced with real data
+        // Placeholder prompts – in a production version these would be
+        // generated or pulled from a database.
         round.setPromptLeft("Froid");
         round.setPromptRight("Chaud");
         round.setTargetPosition(new Random().nextDouble());
@@ -114,6 +120,9 @@ public class RoomService {
         return toRoundDTO(round);
     }
 
+    /**
+     * Helper to get a room by code or throw an exception if not found.
+     */
     private GameRoom getOrThrow(String code) {
         GameRoom room = rooms.get(code);
         if (room == null) {
@@ -122,6 +131,10 @@ public class RoomService {
         return room;
     }
 
+    /**
+     * Generates a unique 4‑character room code consisting of uppercase
+     * letters and digits.  The code excludes ambiguous characters (I, O, 0, 1).
+     */
     private String generateCode() {
         String letters = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
         Random r = new Random();
@@ -136,6 +149,9 @@ public class RoomService {
         return code;
     }
 
+    /**
+     * Converts a GameRoom into a RoomDTO for transmission to clients.
+     */
     private RoomDTO toDTO(GameRoom room) {
         List<PlayerDTO> players = room.getPlayers().values().stream()
                 .map(p -> new PlayerDTO(p.getId(), p.getName(), p.getScore()))
@@ -147,7 +163,10 @@ public class RoomService {
         return new RoomDTO(room.getCode(), players, roundDTO, room.getState());
     }
 
-    private RoundDTO toRoundDTO(Round r) {
-        return new RoundDTO(r.getPromptLeft(), r.getPromptRight(), r.isRevealed());
+    /**
+     * Converts a Round into a DTO with only the necessary public fields.
+     */
+    private RoundDTO toRoundDTO(Round round) {
+        return new RoundDTO(round.getPromptLeft(), round.getPromptRight(), round.isRevealed());
     }
 }

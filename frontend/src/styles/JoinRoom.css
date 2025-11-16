@@ -1,0 +1,77 @@
+/* Styling for the JoinRoom page.  Provides a card with two separate
+   join options and a visual divider between them. */
+
+.join-room-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--color-surface, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.join-room-container h2 {
+  margin-bottom: 1rem;
+  font-size: 1.75rem;
+  color: var(--color-primary, #342e5c);
+}
+
+.join-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.join-form h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  color: var(--color-primary, #342e5c);
+}
+
+.join-form input {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.join-form button {
+  padding: 0.6rem;
+  font-size: 1rem;
+  color: #fff;
+  background-color: var(--color-primary, #342e5c);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.join-form button:hover {
+  background-color: var(--color-primary-dark, #2c2550);
+}
+
+.divider {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  color: #777;
+  position: relative;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
