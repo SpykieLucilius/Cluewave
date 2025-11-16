@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './app/App.jsx';
 import './styles/index.css';
 
-import { SoundProvider } from './context/audio/SoundProvider.jsx';
+import { SoundProvider } from './context/audio/SoundContext.jsx';
 import { MusicProvider } from './context/audio/MusicProvider.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
