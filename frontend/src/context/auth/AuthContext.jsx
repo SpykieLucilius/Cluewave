@@ -74,9 +74,35 @@ export function AuthProvider({ children }) {
     return data;
   };
 
+  /**
+   * Performs a social login using an identity provider such as Google.  The
+   * provider name and ID token are sent to the backend.  On success the
+   * user and token are stored in state and localStorage.  Errors from the
+   * backend are surfaced as thrown exceptions.
+   *
+   * @param provider the name of the social provider (e.g. "google")
+   * @param idToken  the ID token returned by the provider
+   */
+  const socialLogin = async (provider, idToken) => {
+    const res = await fetch('/api/auth/social-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ provider, idToken }),
+    });
+    if (!res.ok) {
+      const msg = await res.text();
+      throw new Error(msg || 'Unable to login via social provider');
+    }
+    const data = await res.json();
+    setUser(data.user);
+    setToken(data.accessToken);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    localStorage.setItem('token', data.accessToken);
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, token, login, register, logout, updateProfile }}
+      value={{ user, token, login, register, logout, updateProfile, socialLogin }}
     >
       {children}
     </AuthContext.Provider>

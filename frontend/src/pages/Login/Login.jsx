@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/auth/AuthContext.jsx';
 import '../../styles/Login.css';
@@ -11,10 +11,55 @@ import '../../styles/Login.css';
  */
 export default function Login() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, socialLogin } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+
+  // Callback invoked by Google Identity Services when a user selects
+  // a Google account.  The response object contains an ID token in
+  // the "credential" field which is sent to the backend for
+  // verification and login.
+  const handleGoogleCredentialResponse = async (response) => {
+    const idToken = response.credential;
+    setError(null);
+    try {
+      await socialLogin('google', idToken);
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // Dynamically load the Google Identity Services script and render the
+  // sign‑in button when the component mounts.  On unmount the script
+  // element is removed.
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    script.onload = () => {
+      if (window.google && window.google.accounts) {
+        window.google.accounts.id.initialize({
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+          callback: handleGoogleCredentialResponse,
+        });
+        const btn = document.getElementById('google-signin-button');
+        if (btn) {
+          window.google.accounts.id.renderButton(btn, {
+            theme: 'outline',
+            size: 'large',
+            width: '100%',
+          });
+        }
+      }
+    };
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,6 +99,10 @@ export default function Login() {
           </div>
           {error && <p className="error-message">{error}</p>}
           <button type="submit" className="login-button">Login</button>
+          {/* Container for the Google sign‑in button.  The button is
+              rendered by the Google Identity Services SDK via the
+              renderButton call in the useEffect above. */}
+          <div id="google-signin-button" style={{ marginTop: '1rem' }}></div>
           <p className="register-link">
             Don't have an account? <Link to="/register">Register</Link>
           </p>

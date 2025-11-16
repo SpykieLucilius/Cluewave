@@ -5,6 +5,7 @@ import com.cluewave.auth.dto.LoginRequest;
 import com.cluewave.auth.dto.RegisterRequest;
 import com.cluewave.auth.dto.UpdateUserRequest;
 import com.cluewave.auth.dto.UserDTO;
+import com.cluewave.auth.dto.SocialLoginRequest;
 import com.cluewave.auth.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,25 @@ public class AuthController {
             return ResponseEntity.ok(response);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+    }
+
+    /**
+     * Endpoint for social authentication.  Accepts a provider name and ID
+     * token, validates the token via the configured social provider, and
+     * returns a JWT for the newly authenticated session.  Unsupported
+     * providers or invalid tokens result in a 401 UNAUTHORIZED response.
+     *
+     * @param request the social login request payload
+     * @return the authentication response on success
+     */
+    @PostMapping("/social-login")
+    public ResponseEntity<?> socialLogin(@Valid @RequestBody SocialLoginRequest request) {
+        try {
+            AuthResponse response = authService.socialLogin(request);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
         }
     }
 
