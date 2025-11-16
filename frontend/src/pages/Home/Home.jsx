@@ -7,7 +7,8 @@ import '../../styles/Home.css';
  * friendly hero section with calls to action for creating or joining a
  * game and displays basic authentication controls.  The design aims to
  * minimize friction by showing only two primary actions and making them
- * prominent.
+ * prominent.  A dark global background with a light card is used to
+ * integrate with the site’s overall theme.
  */
 export default function Home() {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function Home() {
         )}
       </section>
       <footer className="home-footer">
-        <p>© {new Date().getFullYear()} 2025 Cluewave. Inspired by Wavelenght. Open-source party game. Currently in development.</p>
+         <p>© {new Date().getFullYear()} Cluewave. Inspired by Wavelenght. Open-source party game. Currently in development.</p>
       </footer>
     </div>
   );

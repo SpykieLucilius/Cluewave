@@ -4,11 +4,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Represents the state of an in‑memory game room.  A room can hold exactly
- * two players – a host and a single guest – and tracks minimal state
- * required for play.  The host’s username and email are stored to allow
- * lookup by email when a friend wishes to join without a code.  The room
- * state string can be "lobby" (waiting for players) or "in_round" when a
+ * Represents the state of an in‑memory game room.  A room holds exactly two
+ * players – a host and a single guest – and tracks minimal state required
+ * for play.  The host’s username and email are stored to allow lookup by
+ * email when a friend wishes to join without a code.  The room state can
+ * be {@code "lobby"} (waiting for players) or {@code "in_round"} when a
  * round is active.
  */
 public class GameRoom {

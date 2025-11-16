@@ -1,32 +1,48 @@
 /* Styling for the improved Home page.  A hero section with large
    typography, central calls to action, and minimal clutter. */
 
+/*
+  The home page uses a dark theme background with a light card in the centre.
+  The global background is dark to match the overall site theme; the central
+  panel (hero card) is bright and elevated with a subtle shadow.
+*/
+
 .home-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #1f1d2b; /* dark background */
+  color: #2f294c;           /* dark text for headings on light cards */
   text-align: center;
-  background: linear-gradient(135deg, #f5f5fc 0%, #ebe9f8 100%);
-  color: #342e5c;
 }
 
+/* The hero card is centred and constrained in width. It uses the same
+   card styling as CreateRoom/JoinRoom pages to ensure consistency. */
 .hero {
   flex: 1;
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 3rem 2rem;
+  background-color: #f4f3fb; /* light surface */
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
 }
 
+/*.hero h1 sets the main logo/heading size*/
 .hero h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 0.5rem;
+  color: #322b5d;
 }
 
 .hero p {
-  font-size: 1.25rem;
-  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #554e81;
 }
 
 .cta-buttons {
@@ -34,19 +50,20 @@
   gap: 1rem;
 }
 
+/* Buttons adopt site‑wide primary purple palette */
 .cta-buttons button {
-  padding: 0.8rem 1.6rem;
-  font-size: 1.1rem;
+  padding: 0.7rem 1.4rem;
+  font-size: 1rem;
   color: #fff;
-  background-color: #342e5c;
+  background-color: #3d347a;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .cta-buttons button:hover {
-  background-color: #2c2550;
+  background-color: #322d6b;
 }
 
 .auth-controls {
@@ -56,25 +73,28 @@
   justify-content: center;
 }
 
+/* Auth controls align horizontally beneath the hero card and use outlined
+   buttons for secondary actions. */
 .auth-controls button {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
-  color: #342e5c;
-  background-color: #fff;
-  border: 1px solid #342e5c;
+  color: #3d347a;
+  background-color: transparent;
+  border: 1px solid #3d347a;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
 }
 
 .auth-controls button:hover {
-  background-color: #342e5c;
+  background-color: #3d347a;
   color: #fff;
 }
 
 .home-footer {
   padding: 1rem;
   font-size: 0.8rem;
-  background-color: #faf9ff;
-  border-top: 1px solid #eae7f3;
+  color: #a89ac6;
+  background-color: #1f1d2b;
+  border-top: 1px solid #2f2b3f;
 }

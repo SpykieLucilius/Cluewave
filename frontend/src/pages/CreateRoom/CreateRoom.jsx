@@ -52,7 +52,9 @@ export default function CreateRoom() {
       <h2>Create a Room</h2>
       {user ? (
         <>
-          <p>You will be the host as <strong>{user.username}</strong>.</p>
+          <p>
+            You will be the host as <strong>{user.username}</strong>.
+          </p>
           <button onClick={createRoom}>Create Room</button>
         </>
       ) : (

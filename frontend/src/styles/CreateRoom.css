@@ -1,40 +1,43 @@
 /* Styling for the CreateRoom page.  This uses a centered card layout with
-   subtle borders and spacing to make the UI approachable. */
+   subtle borders and spacing to make the UI approachable and consistent
+   with the home page design. */
 
 .create-room-container {
-  max-width: 400px;
-  margin: 2rem auto;
+  max-width: 420px;
+  margin: 3rem auto;
   padding: 2rem;
-  background-color: var(--color-surface, #ffffff);
+  background-color: #f4f3fb;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
   text-align: center;
+  color: #2f294c;
 }
 
 .create-room-container h2 {
   margin-bottom: 1rem;
-  font-size: 1.75rem;
-  color: var(--color-primary, #342e5c);
+  font-size: 1.8rem;
+  color: #322b5d;
 }
 
 .create-room-container p {
   margin-bottom: 1rem;
   font-size: 1rem;
-  color: var(--color-text, #444);
+  color: #554e81;
 }
 
 .create-room-container a {
-  color: var(--color-accent, #6541e6);
+  color: #6541e6;
   text-decoration: underline;
+  word-break: break-all;
 }
 
 .create-room-container button {
   display: inline-block;
   margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
+  padding: 0.7rem 1.4rem;
   font-size: 1rem;
   color: #fff;
-  background-color: var(--color-primary, #342e5c);
+  background-color: #3d347a;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -42,5 +45,5 @@
 }
 
 .create-room-container button:hover {
-  background-color: var(--color-primary-dark, #2c2550);
+  background-color: #322d6b;
 }

@@ -11,6 +11,7 @@ import '../../styles/JoinRoom.css';
 export default function JoinRoom() {
   const { user, token } = useAuth();
   const navigate = useNavigate();
+  // default the player name to the current username if available
   const [playerName, setPlayerName] = useState(user?.username || '');
   const [roomCode, setRoomCode] = useState('');
   const [hostEmail, setHostEmail] = useState('');
