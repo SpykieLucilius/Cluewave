@@ -1,19 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/auth/AuthContext.jsx';
 import SoundControl from '../SoundControl/SoundControl.jsx';
 import styles from './NavBar.module.css';
 
-/**
- * Floating navigation bar with login/profile and sound control.
- *
- * - Unauthenticated: shows a “Login” button.
- * - Authenticated: shows a “Profile” button that toggles an overlay card.
- *   • View mode: displays name/email + Logout + Edit buttons.
- *   • Edit mode: allows editing username, email, and password (requires current password).
- */
 export default function NavBar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, logout, updateProfile } = useAuth();
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -27,7 +20,8 @@ export default function NavBar() {
   const [error, setError] = useState('');
   const cardRef = useRef(null);
 
-  // Close card on click outside or Escape key.
+  const isHome = location.pathname === '/';
+
   useEffect(() => {
     const handleOutside = (e) => {
       if (cardRef.current && !cardRef.current.contains(e.target)) {
@@ -51,7 +45,6 @@ export default function NavBar() {
     };
   }, []);
 
-  // Reset form to current values.
   const resetForm = () => {
     setFormData({
       username: user?.username || '',
@@ -63,13 +56,11 @@ export default function NavBar() {
     setError('');
   };
 
-  // Generic change handler.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Validate inputs and submit.
   const handleSave = async () => {
     if (!formData.currentPassword) {
       setError('Please enter your current password.');
@@ -116,6 +107,16 @@ export default function NavBar() {
 
   return (
     <div className={styles.floatingBar}>
+      {!isHome && (
+        <button
+          className={styles.iconButton}
+          onClick={() => navigate('/')}
+          aria-label="Home"
+        >
+          Home
+        </button>
+      )}
+
       {!user ? (
         <button
           className={styles.iconButton}
@@ -178,61 +179,61 @@ export default function NavBar() {
               ) : (
                 <>
                   <div className={styles.cardHeader}>Edit Profile</div>
-                    <input
-                      className={styles.inputField}
-                      name="username"
-                      value={formData.username}
-                      onChange={handleChange}
-                      placeholder="Username"
-                    />
-                    <input
-                      className={styles.inputField}
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Email"
-                      type="email"
-                    />
-                    <input
-                      className={styles.inputField}
-                      type="password"
-                      name="currentPassword"
-                      value={formData.currentPassword}
-                      onChange={handleChange}
-                      placeholder="Current password"
-                    />
-                    <input
-                      className={styles.inputField}
-                      type="password"
-                      name="newPassword"
-                      value={formData.newPassword}
-                      onChange={handleChange}
-                      placeholder="New password"
-                    />
-                    <input
-                      className={styles.inputField}
-                      type="password"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      placeholder="Confirm new password"
-                    />
-                    {error && <div className={styles.errorText}>{error}</div>}
-                    <div className={styles.cardActions}>
-                      <button className={styles.saveBtn} onClick={handleSave}>
-                        Save
-                      </button>
-                      <button
-                        className={styles.cancelBtn}
-                        onClick={() => {
-                          setEditMode(false);
-                          setError('');
-                          resetForm();
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    </div>
+                  <input
+                    className={styles.inputField}
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    placeholder="Username"
+                  />
+                  <input
+                    className={styles.inputField}
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    type="email"
+                  />
+                  <input
+                    className={styles.inputField}
+                    type="password"
+                    name="currentPassword"
+                    value={formData.currentPassword}
+                    onChange={handleChange}
+                    placeholder="Current password"
+                  />
+                  <input
+                    className={styles.inputField}
+                    type="password"
+                    name="newPassword"
+                    value={formData.newPassword}
+                    onChange={handleChange}
+                    placeholder="New password"
+                  />
+                  <input
+                    className={styles.inputField}
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="Confirm new password"
+                  />
+                  {error && <div className={styles.errorText}>{error}</div>}
+                  <div className={styles.cardActions}>
+                    <button className={styles.saveBtn} onClick={handleSave}>
+                      Save
+                    </button>
+                    <button
+                      className={styles.cancelBtn}
+                      onClick={() => {
+                        setEditMode(false);
+                        setError('');
+                        resetForm();
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </>
               )}
             </div>
