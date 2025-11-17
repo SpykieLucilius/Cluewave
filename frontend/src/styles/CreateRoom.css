@@ -1,28 +1,25 @@
-/* Styling for the CreateRoom page.  This uses a centered card layout with
-   subtle borders and spacing to make the UI approachable and consistent
-   with the home page design. */
 
 .create-room-container {
   max-width: 420px;
   margin: 3rem auto;
   padding: 2rem;
-  background-color: #f4f3fb;
+  background-color: #2a2a2a;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
   text-align: center;
-  color: #2f294c;
+  color: #ffffff;
 }
 
 .create-room-container h2 {
   margin-bottom: 1rem;
   font-size: 1.8rem;
-  color: #322b5d;
+  color: #ffffff;
 }
 
 .create-room-container p {
   margin-bottom: 1rem;
   font-size: 1rem;
-  color: #554e81;
+  color: #c6b7e6;
 }
 
 .create-room-container a {
