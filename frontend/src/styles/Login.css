@@ -1,10 +1,8 @@
-/* Styles for the login page */
 .login-page {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #3b3b3b;
   color: #ffffff;
 }
 
@@ -45,7 +43,7 @@
 .login-button {
   width: 100%;
   padding: 0.75rem;
-  background-color: #db5cdb;
+  background-color: #3d347a;
   color: #ffffff;
   border: none;
   border-radius: 4px;
@@ -55,7 +53,7 @@
 }
 
 .login-button:hover {
-  background-color: #c346c3;
+  background-color: #322d6b;
 }
 
 .error-message {
@@ -71,7 +69,7 @@
 }
 
 .register-link a {
-  color: #db5cdb;
+  color: #3d347a;
   text-decoration: none;
 }
 
@@ -79,7 +77,6 @@
   text-decoration: underline;
 }
 
-/* Fade in animation reused from Home.css */
 @keyframes fadeInUp {
   0% {
     opacity: 0;

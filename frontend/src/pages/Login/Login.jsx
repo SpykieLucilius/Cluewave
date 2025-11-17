@@ -3,12 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/auth/AuthContext.jsx';
 import '../../styles/Login.css';
 
-/**
- * Login page allowing players to authenticate with their email and password.
- * Utilises the {@link useAuth} hook to perform the login and redirect
- * authenticated users to the home page.  Displays any backend error
- * messages to the user.
- */
 export default function Login() {
   const navigate = useNavigate();
   const { login, socialLogin } = useAuth();
@@ -16,10 +10,6 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  // Callback invoked by Google Identity Services when a user selects
-  // a Google account.  The response object contains an ID token in
-  // the "credential" field which is sent to the backend for
-  // verification and login.
   const handleGoogleCredentialResponse = async (response) => {
     const idToken = response.credential;
     setError(null);
@@ -30,10 +20,6 @@ export default function Login() {
       setError(err.message);
     }
   };
-
-  // Dynamically load the Google Identity Services script and render the
-  // sign‑in button when the component mounts.  On unmount the script
-  // element is removed.
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://accounts.google.com/gsi/client';
@@ -99,9 +85,6 @@ export default function Login() {
           </div>
           {error && <p className="error-message">{error}</p>}
           <button type="submit" className="login-button">Login</button>
-          {/* Container for the Google sign‑in button.  The button is
-              rendered by the Google Identity Services SDK via the
-              renderButton call in the useEffect above. */}
           <div id="google-signin-button" style={{ marginTop: '1rem' }}></div>
           <p className="register-link">
             Don't have an account? <Link to="/register">Register</Link>
