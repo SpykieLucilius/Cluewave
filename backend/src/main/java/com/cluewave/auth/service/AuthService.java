@@ -1,3 +1,10 @@
+// ---------------------------------------------------------------------
+// AUTHENTICATION SERVICE
+// Provides user registration, email/password login, Google social login,
+// JWT generation/validation, and profile update logic with validations.
+// Interacts with UserRepository, PasswordEncoder, AuthenticationManager, and JwtUtils.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.service;
 
 import com.cluewave.auth.dto.AuthResponse;
@@ -78,17 +85,6 @@ public class AuthService {
                 new UserDTO(user.getId(), user.getUsername(), user.getEmail()));
     }
 
-    /**
-     * Authenticates a user using a social provider.  Currently only Google
-     * tokens are supported.  The method verifies the provided ID token with
-     * the provider, extracts the user's email and name, creates a new
-     * account if none exists, and returns a standard {@link AuthResponse}.
-     *
-     * @param request the request containing the provider name and ID token
-     * @return a fully populated authentication response
-     * @throws IllegalArgumentException if the token is invalid or the provider
-     *                                  is unsupported
-     */
     @Transactional
     public AuthResponse socialLogin(SocialLoginRequest request) {
         if (request == null || request.getProvider() == null || request.getIdToken() == null) {
@@ -101,17 +97,14 @@ public class AuthService {
             throw new IllegalArgumentException("Provider and idToken are required");
         }
 
-        // Only Google is supported for now
         if (!"google".equals(provider)) {
             throw new IllegalArgumentException("Unsupported social provider: " + provider);
         }
 
-        // Verify the ID token by calling Google's tokeninfo endpoint.
         String email;
         String displayName;
         try {
             String encoded = URLEncoder.encode(idToken, StandardCharsets.UTF_8);
-            // ✅ Use URI.create(...).toURL() instead of new URL(String) to avoid the deprecated ctor
             URI uri = URI.create("https://oauth2.googleapis.com/tokeninfo?id_token=" + encoded);
             URL url = uri.toURL();
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -144,13 +137,11 @@ public class AuthService {
             throw new IllegalArgumentException("Unable to verify Google ID token");
         }
 
-        // Check if a user with this email already exists. If yes, reuse it.
         Optional<User> existingOpt = userRepository.findByEmail(email);
         User user;
         if (existingOpt.isPresent()) {
             user = existingOpt.get();
         } else {
-            // Generate a unique username based on the display name.
             String baseUsername = displayName.replaceAll("\\s+", "").toLowerCase();
             String username = generateUniqueUsername(baseUsername);
 
@@ -158,7 +149,6 @@ public class AuthService {
             user.setEmail(email);
             user.setUsername(username);
 
-            // Random password for social accounts
             String randomPassword = UUID.randomUUID().toString();
             user.setPassword(passwordEncoder.encode(randomPassword));
             userRepository.save(user);
@@ -170,9 +160,6 @@ public class AuthService {
                 new UserDTO(user.getId(), user.getUsername(), user.getEmail()));
     }
 
-    /**
-     * Generates a unique username by checking the repository for conflicts.
-     */
     private String generateUniqueUsername(String base) {
         String candidate = base;
         int suffix = 1;
@@ -192,16 +179,13 @@ public class AuthService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        // Le mot de passe actuel est obligatoire pour toute modification
         if (currentPassword == null || currentPassword.isBlank()) {
             throw new IllegalArgumentException("Current password is required");
         }
-        // Vérifier que le mot de passe actuel correspond
         if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
             throw new IllegalArgumentException("Incorrect current password");
         }
 
-        // Mise à jour du nom d’utilisateur
         if (username != null && !username.isBlank() && !username.equals(user.getUsername())) {
             if (username.length() < 3) {
                 throw new IllegalArgumentException("Username must be at least 3 characters");
@@ -212,7 +196,6 @@ public class AuthService {
             user.setUsername(username);
         }
 
-        // Mise à jour de l’email
         if (email != null && !email.isBlank() && !email.equals(user.getEmail())) {
             Pattern emailRegex = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
             if (!emailRegex.matcher(email).matches()) {
@@ -224,7 +207,6 @@ public class AuthService {
             user.setEmail(email);
         }
 
-        // Mise à jour du mot de passe
         if (newPassword != null && !newPassword.isBlank()) {
             if (newPassword.length() < 6) {
                 throw new IllegalArgumentException("Password must be at least 6 characters");

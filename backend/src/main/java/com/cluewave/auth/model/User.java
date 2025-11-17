@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// USER ENTITY
+// JPA entity representing an application user with email, username, and password.
+// Includes automatic createdAt timestamp and basic getter/setter methods.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.model;
 
 import jakarta.persistence.*;

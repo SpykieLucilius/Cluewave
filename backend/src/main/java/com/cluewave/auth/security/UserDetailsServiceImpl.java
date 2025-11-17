@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// USEERDETAILSSERVICE IMPLEMENTATION
+// Loads a user from the database by email to support Spring Security authentication.
+// Wraps the User entity in a UserPrincipal with granted authorities.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.security;
 
 import com.cluewave.auth.model.User;

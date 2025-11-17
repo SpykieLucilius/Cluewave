@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// WEBSOCKET CONFIGURATION
+// Enables STOMP over WebSocket and registers endpoints and message broker settings.
+// Configures a /ws-game endpoint for SockJS connections and /topic prefixes for broadcasting.
+// ---------------------------------------------------------------------
+
 package com.cluewave.config;
 
 import org.springframework.context.annotation.Configuration;

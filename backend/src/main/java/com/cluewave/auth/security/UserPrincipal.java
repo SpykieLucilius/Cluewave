@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// USERPRINCIPAL ADAPTER
+// Implements Spring Security's UserDetails interface by adapting the User entity.
+// Provides authorities, username (email), password, and account state flags.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.security;
 
 import com.cluewave.auth.model.User;

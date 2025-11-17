@@ -1,13 +1,13 @@
+// ---------------------------------------------------------------------
+// SOCIAL LOGIN REQUEST DTO
+// Payload for initiating social authentication via a provider (e.g. Google).
+// Includes provider name and provider-issued ID token required for verification.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-/**
- * Request payload used for social authentication.  The client should send
- * the name of the social provider (e.g. "google") along with the
- * provider‑issued ID token.  Both fields are required and validated
- * using {@link jakarta.validation.constraints.NotBlank} annotations.
- */
 public class SocialLoginRequest {
 
     @NotBlank
@@ -17,7 +17,6 @@ public class SocialLoginRequest {
     private String idToken;
 
     public SocialLoginRequest() {
-        // Default constructor for JSON deserialization
     }
 
     public SocialLoginRequest(String provider, String idToken) {

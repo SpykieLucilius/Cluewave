@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// JWT UTILITY CLASS
+// Provides methods to generate, parse, and validate JSON Web Tokens.
+// Uses a base64-encoded secret and expiration configured via application properties.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.security;
 
 import io.jsonwebtoken.Claims;

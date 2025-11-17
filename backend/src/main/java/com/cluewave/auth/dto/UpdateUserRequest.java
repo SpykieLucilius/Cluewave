@@ -1,10 +1,11 @@
+// ---------------------------------------------------------------------
+// FEATURE/Update User Request DTO
+// Payload for updating a user's profile (username, email, and password).
+// Only non-null fields are applied; current password is required for changes.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.dto;
 
-/**
- * DTO pour la mise à jour du profil.
- * Les champs null ou vides laissent la valeur inchangée.
- * currentPassword est obligatoire pour toutes les modifications.
- */
 public class UpdateUserRequest {
     private String username;
     private String email;

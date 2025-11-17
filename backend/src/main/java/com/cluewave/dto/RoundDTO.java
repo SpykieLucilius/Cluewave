@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// ROUND DTO
+// Represents the prompts and reveal state for a single round of the game.
+// Contains left and right prompts and whether the answer has been revealed.
+// ---------------------------------------------------------------------
+
 package com.cluewave.dto;
 
 public class RoundDTO {

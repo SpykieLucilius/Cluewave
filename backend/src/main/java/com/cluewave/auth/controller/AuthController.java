@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// AUTHENTICATION REST CONTROLLER
+// Handles registration, login (email/password and social), and profile updates.
+// Validates requests and wraps service responses in appropriate HTTP statuses.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.controller;
 
 import com.cluewave.auth.dto.AuthResponse;
@@ -44,15 +50,13 @@ public class AuthController {
         }
     }
 
-    /**
-     * Endpoint for social authentication.  Accepts a provider name and ID
-     * token, validates the token via the configured social provider, and
-     * returns a JWT for the newly authenticated session.  Unsupported
-     * providers or invalid tokens result in a 401 UNAUTHORIZED response.
-     *
-     * @param request the social login request payload
-     * @return the authentication response on success
-     */
+// ---------------------------------------------------------------------
+// SOCIAL LOGIN (Google) — FEATURE INACTIVE
+// Endpoint implemented but NOT used because it requires a valid Google
+// OAuth client_id. A correct client_id cannot be generated without
+// enabling Google Cloud billing, which is currently not possible.
+// ---------------------------------------------------------------------
+
     @PostMapping("/social-login")
     public ResponseEntity<?> socialLogin(@Valid @RequestBody SocialLoginRequest request) {
         try {

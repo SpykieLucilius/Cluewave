@@ -1,3 +1,10 @@
+// ---------------------------------------------------------------------
+// SECURITY CONFIGURATION
+// Configures Spring Security for the application: disables CSRF, configures stateless sessions,
+// defines public and protected endpoints, adds the JWT filter, and exposes beans for password
+// encoding and authentication manager.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.security;
 
 import org.springframework.context.annotation.Bean;

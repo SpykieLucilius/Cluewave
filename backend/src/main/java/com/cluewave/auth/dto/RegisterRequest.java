@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// REGISTER REQUEST DTO
+// Payload for user registration including username, email, and password.
+// Applies validation constraints on length and format for each field.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.dto;
 
 import jakarta.validation.constraints.Email;

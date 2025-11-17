@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// IN-MEMORY ROUND MODEL
+// Encapsulates the prompts, target slider position, and reveal state for a game round.
+// Getters and setters allow the service to configure and update round data.
+// ---------------------------------------------------------------------
+
 package com.cluewave.model;
 
 public class Round {

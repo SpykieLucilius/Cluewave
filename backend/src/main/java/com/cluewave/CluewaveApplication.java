@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// MAIN APPLICATION ENTRY POINT
+// Bootstraps the Spring Boot application and starts the embedded server.
+// Provides the main method required by Spring Boot to launch the backend.
+// ---------------------------------------------------------------------
+
 package com.cluewave;
 
 import org.springframework.boot.SpringApplication;

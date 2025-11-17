@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// AUTHENTICATION RESPONSE DTO
+// Encapsulates the JWT access token and user information returned after auth.
+// Includes token type, expiration, and a nested UserDTO with id, username, and email.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.dto;
 
 public class AuthResponse {

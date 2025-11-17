@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// JWT AUTHENTICATION FILTER
+// Once-per-request filter that extracts a JWT from the Authorization header,
+// validates it, loads the corresponding user, and populates the SecurityContext.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.security;
 
 import jakarta.servlet.FilterChain;

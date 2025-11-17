@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// PLAYER DTO
+// Represents a player in a game room with an id, name, and score.
+// Used to send player information to clients without exposing internal model.
+// ---------------------------------------------------------------------
+
 package com.cluewave.dto;
 
 public class PlayerDTO {

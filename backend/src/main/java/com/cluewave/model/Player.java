@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// IN-MEMORY PLAYER MODEL
+// Represents a player within a room with unique id, name, and score.
+// Provides a method to increment score when points are earned.
+// ---------------------------------------------------------------------
+
 package com.cluewave.model;
 
 public class Player {

@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// LOGIN REQUEST DTO
+// Payload sent by clients when performing standard email/password login.
+// Contains validated email and password fields with bean validation annotations.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.dto;
 
 import jakarta.validation.constraints.Email;

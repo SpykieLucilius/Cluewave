@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// USER REPOSITORY INTERFACE
+// Extends JpaRepository to perform CRUD operations on User entities.
+// Declares query methods for finding users by email or username and existence checks.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.repository;
 
 import com.cluewave.auth.model.User;

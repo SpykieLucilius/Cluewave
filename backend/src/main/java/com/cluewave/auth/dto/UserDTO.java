@@ -1,3 +1,9 @@
+// ---------------------------------------------------------------------
+// FEATURE/User Data Transfer Object
+// Simplified representation of a user used in responses.
+// Contains id, username, and email and is used to avoid exposing sensitive fields.
+// ---------------------------------------------------------------------
+
 package com.cluewave.auth.dto;
 
 public class UserDTO {
