@@ -1,9 +1,7 @@
 .home-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background-color: #1f1d2b; 
-  color: #2f294c;           
+  min-height: 100vh;          
 }
 
 .hero {
