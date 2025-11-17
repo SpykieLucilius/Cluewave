@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------
-// FEATURE/Update User Request DTO
+// UPDATE USER REQUEST DTO
 // Payload for updating a user's profile (username, email, and password).
 // Only non-null fields are applied; current password is required for changes.
 // ---------------------------------------------------------------------

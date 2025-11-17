@@ -40,12 +40,9 @@ export default function Home() {
         {user ? (
           <>
             <p>Welcome, {user.username}!</p>
-            <button onClick={logout}>Logout</button>
           </>
         ) : (
           <>
-            <button onClick={() => navigate('/login')}>Login</button>
-            <button onClick={() => navigate('/register')}>Register</button>
           </>
         )}
       </section>

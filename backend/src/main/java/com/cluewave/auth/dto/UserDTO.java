@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------
-// FEATURE/User Data Transfer Object
+// USER DTO
 // Simplified representation of a user used in responses.
 // Contains id, username, and email and is used to avoid exposing sensitive fields.
 // ---------------------------------------------------------------------

@@ -1,48 +1,33 @@
-/* Styling for the improved Home page.  A hero section with large
-   typography, central calls to action, and minimal clutter. */
-
-/*
-  The home page uses a dark theme background with a light card in the centre.
-  The global background is dark to match the overall site theme; the central
-  panel (hero card) is bright and elevated with a subtle shadow.
-*/
-
 .home-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #1f1d2b; /* dark background */
-  color: #2f294c;           /* dark text for headings on light cards */
-  text-align: center;
+  background-color: #1f1d2b; 
+  color: #2f294c;           
 }
 
-/* The hero card is centred and constrained in width. It uses the same
-   card styling as CreateRoom/JoinRoom pages to ensure consistency. */
 .hero {
   flex: 1;
   max-width: 600px;
   margin: 3rem auto;
   padding: 3rem 2rem;
-  background-color: #f4f3fb; /* light surface */
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  background-color: transparent; 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-/*.hero h1 sets the main logo/heading size*/
 .hero h1 {
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
-  color: #322b5d;
+  color: #ffffff;
 }
 
 .hero p {
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
-  color: #554e81;
+  color: #b8b8b8;
 }
 
 .cta-buttons {
@@ -50,7 +35,6 @@
   gap: 1rem;
 }
 
-/* Buttons adopt site‑wide primary purple palette */
 .cta-buttons button {
   padding: 0.7rem 1.4rem;
   font-size: 1rem;
@@ -73,8 +57,6 @@
   justify-content: center;
 }
 
-/* Auth controls align horizontally beneath the hero card and use outlined
-   buttons for secondary actions. */
 .auth-controls button {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
@@ -94,7 +76,5 @@
 .home-footer {
   padding: 1rem;
   font-size: 0.8rem;
-  color: #a89ac6;
-  background-color: #1f1d2b;
-  border-top: 1px solid #2f2b3f;
+  color: #c6b7e6;
 }
